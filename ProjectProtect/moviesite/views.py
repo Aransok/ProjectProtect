@@ -26,7 +26,7 @@ class MovieList(views.CreateView):
     def get(self, request, *args, **kwargs):
 
         movies = MovieModel.objects.all()
-        paginator = Paginator(movies, 20)  # Set the number of movies per page
+        paginator = Paginator(movies, 20)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
@@ -78,7 +78,7 @@ class MovieDetails(views.View):
 
 class GenreMoviesView(views.View):
     template_name = 'movies_by_genre.html'
-    paginate_by = 20  # Number of movies to display per page
+    paginate_by = 20
 
     def get(self, request, genre):
         movies = MovieModel.objects.filter(genre=genre)
@@ -96,7 +96,7 @@ def add_comment(request, pk, slug):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.movie = movie  # Assign the movie object to the comment's movie field
+            comment.movie = movie
             comment.user = request.user
             comment.save()
             return redirect('movie_details', pk=pk, slug=slug)

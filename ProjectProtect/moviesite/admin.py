@@ -10,10 +10,9 @@ class Comment(admin.ModelAdmin):
 class AdminMovies(admin.ModelAdmin):
     list_display = ('custom_pk', 'name', 'year', 'genre')
 
-    # Add other fields you want to display in the admin list
 
     def custom_pk(self, obj):
-        return obj.pk  # Customize the display of the primary key field
+        return obj.pk
 
     custom_pk.short_description = 'ID'
 
