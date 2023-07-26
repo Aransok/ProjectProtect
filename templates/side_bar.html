@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/side_bar.css' %}">
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Categories
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+
+        <a class="dropdown-item" href="{% url 'home' %}">All Movies</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Action' %}">Action</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Comedy' %}">Comedy</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Fantasy' %}">Fantasy</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Romance' %}">Romance</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Sci-Fi' %}">Sci-Fi</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Horror' %}">Horror</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Crime' %}">Crime</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Drama' %}">Drama</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Animation' %}">Animation</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Thriller' %}">Thriller</a>
+
+        <a class="dropdown-item" href="{% url 'movies_by_genre' genre='Mistery' %}">Mistery</a>
+
+
+    </div>
+</div>
+
+<script>
+    $('.dropdown-toggle').dropdown()
+
+
+</script>

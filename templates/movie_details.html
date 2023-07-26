@@ -1,0 +1,147 @@
+<!doctype html>
+{% load static %}
+{% include 'navbar.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ movie.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+    <script src="https://www.youtube.com/player_api"></script>
+</head>
+<body>
+<section>
+    <div class="movie-container">
+        <div class="image-container">
+            <img src="{{ movie.image.url }}" alt="Image">
+            <div class="trailer-button-container">
+                <div class="play-button" id="play-button">
+                    <span class="play-icon">▶</span> Play Trailer
+                </div>
+            </div>
+        </div>
+        <div class="movie-details">
+            <div>
+                <h2 class="movie-name">{{ movie.name }}</h2>
+                <p class="movie-year">{{ movie.year }}</p>
+            </div>
+            <p class="movie-description">{{ movie.description }}</p>
+        </div>
+    </div>
+    <div class="trailer-modal" id="trailer-modal">
+        <div class="trailer-modal-content">
+            <div class="close-button" id="close-button">&times;</div>
+            <div class="trailer-iframe" id="trailer-iframe"></div>
+        </div>
+    </div>
+    <hr>
+    <div class="Comments">
+        <h2>Comments</h2>
+        {% if movie.comments.all %}
+            <ul>
+
+                {% for comment in movie.comments.all %}
+                    <li>
+                        <strong>{{ comment.user }}</strong> - {{ comment.timestamp }}<br>
+                        {{ comment.text }}
+                    </li>
+
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <h2>Add a Comment</h2>
+            <form method="post" action="{% url 'comment' movie.pk movie.slug %}">
+                {{ form.as_p }}
+
+                <input type="submit" value="Comment">
+                {% csrf_token %}
+            </form>
+        {% endif %}
+        {% if movie.comment_set.exists %}
+            <h2>Comments</h2>
+            <ul>
+                {% for comment in movie.comment_set.all %}
+                    <li>
+                        {{ comment.content }}
+                        {% if comment.user == request.user %}
+                            <form action="{% url 'delete_comment' pk=movie.pk slug=movie.slug %}" method="POST">
+
+                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                <button type="submit">Delete</button>
+                                {% csrf_token %}
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <br><br>
+    <hr>
+    <h2>Related Movies</h2>
+    <hr>
+    <br><br>
+    <div class="related_movies">
+        <div>
+            <ul class="related_movie_list">
+                {% for related_movie in movies %}
+                    {% if related_movie.genre == movie.genre and related_movie and related_movie != movie %}
+                        <li class="related_movie_item">
+                            <img src="{{ related_movie.image.url }}" alt="Image">
+                            <a class="trailer-link"
+                               href="{% url 'movie_details' related_movie.pk related_movie.slug %}">{{ related_movie.name }}</a>
+                            <p>{{ related_movie.year }}</p>
+                            <p>{{ related_movie.genre }}</p>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</section>
+<script>
+    let player; // YouTube player object
+    const playButton = document.getElementById('play-button');
+    const trailerModal = document.getElementById('trailer-modal');
+    const closeBtn = document.getElementById('close-button');
+    const trailerIframe = document.getElementById('trailer-iframe');
+    const youtubeVideoId = '{{ youtube_video_id }}';
+
+    playButton.addEventListener('click', function () {
+        trailerModal.classList.add('show');
+        trailerIframe.innerHTML = `<iframe src="https://www.youtube.com/embed/${youtubeVideoId}"  allowfullscreen></iframe>`;
+    });
+
+    closeBtn.addEventListener('click', function () {
+        trailerModal.classList.remove('show');
+        trailerIframe.innerHTML = '';
+    });
+
+    function onYouTubePlayerAPIReady() {
+        player = new YT.Player('player', {
+            videoId: '{{ youtube_video_id }}',
+            playerVars: {
+                autoplay: 0,
+            },
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        const playButton = document.getElementById('play-button');
+        playButton.addEventListener('click', function () {
+            event.target.playVideo();
+            playButton.style.display = 'none';
+        });
+    }
+</script>
+</body>
+</html>

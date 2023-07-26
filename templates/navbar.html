@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/nav_bar.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<nav class="navbar navbar-light bg-light">
+    <div class="navbar-left">
+
+        <ul>
+            <li><i class="bi bi-film"><a href="{% url 'home' %}">Home</a></i></li>
+
+
+
+        </ul>
+    </div>
+    <div class="navbar-right">
+        <ul>
+            {% if request.user.is_authenticated %}
+                <label for="profile-dropdown" style="font-size: 20px;margin-left: 10px;">{{ request.user }}:</label>
+                <ul>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    <li><a href="{% url 'edit-profile' %}">Edit Profile</a></li>
+                </ul>
+
+
+
+
+            {% else %}
+                <label>Signup:</label>
+                <ul>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                </ul>
+
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>

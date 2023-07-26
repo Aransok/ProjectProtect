@@ -1,0 +1,46 @@
+
+.btn-secondary:hover {
+    color: #F4E0B9;
+
+    border-color: #F4E0B9;
+}
+
+.btn-secondary.focus, .btn-secondary:focus {
+
+    width:113%;
+    background-color: #434242;
+
+}
+
+.btn-secondary {
+    color: #F4E0B9;
+    background-color: #434242;
+    border-color: #F4E0B9;
+    width: 113%;
+    margin-right: 0;
+}
+
+
+.btn-secondary.focus, .btn-secondary:focus {
+    color: #F4E0B9;
+    background-color: #434242;
+    border-color: #F4E0B9;
+    width: 113%;
+}
+
+a.dropdown-item {
+    background: #434242;
+    color: #F4E0B9;
+    font-size: 15px;
+
+}
+
+.dropdown-menu.show {
+    background-color: #434242;
+
+}
+
+.dropdown-menu {
+    background-color: #434242;
+
+}

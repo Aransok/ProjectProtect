@@ -1,0 +1,237 @@
+
+body {
+    font-family: Popins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F4E0B9;
+}
+
+/* Your existing CSS styles */
+
+/* Your existing CSS styles */
+
+section {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #F4E0B9;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #A8A196;
+    box-shadow: 0 6px 7px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.image-container {
+    position: relative;
+    margin-right: 20px;
+}
+
+.trailer-button-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 91%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0.7;
+    transition: opacity 0.6s ease;
+}
+
+.image-container:hover .trailer-button-container {
+    opacity: 3;
+}
+
+.movie-details {
+    flex: 1;
+}
+
+.movie-name {
+    font-size: 24px;
+
+    color: #434242;
+    margin-bottom: 10px;
+}
+
+.movie-year {
+    margin: 0;
+    color: #434242;
+    font-weight: bold;
+}
+
+.movie-description {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #434242;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+}
+
+.play-button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.play-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.play-icon {
+    color: #fff;
+    font-size: 36px;
+    margin-right: 10px;
+}
+
+.trailer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.trailer-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+
+}
+
+.trailer-modal-content {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    background-color: #F4E0B9;
+    padding: 20px;
+    border-radius: 2px;
+}
+
+.close-button {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 26px;
+    color: #434242;;
+    cursor: pointer;
+}
+
+.trailer-iframe {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (modify as needed) */
+    position: relative;
+}
+
+.trailer-iframe iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+img {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.Comments {
+    margin-top: 20px;
+    margin-left: 20%;
+}
+
+.Comments h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Comments ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.Comments li {
+    margin-bottom: 10px;
+}
+
+.Comments li strong {
+    font-weight: bold;
+}
+
+/* Comment form styles */
+.Comments form {
+    margin-top: 20px;
+}
+
+.Comments input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #F4E0B9;
+    color: #434242;;
+    border: none;
+    cursor: pointer;
+}
+
+.Comments input[type="submit"]:hover {
+    background-color: #F4E0B9;
+}
+.related_movie_item {
+    width: calc(25%); /* Adjust as needed to show 4 movies in one row */
+    margin-bottom: 20px; /* Adjust as needed for spacing between rows */
+    box-sizing: border-box;
+    padding: 7px;
+
+    border: 1px solid #A8A196;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    color: #1E2D3D;
+}
+
+.related_movie_item img {
+    width: 100%;
+    max-height: 150px; /* Adjust the maximum height as needed */
+    object-fit: contain;
+    border-radius: 3px;
+    text-align: center;
+}
+
+
+.related_movie_item a {
+    color: #434242;
+    text-decoration: none;
+}
+.related_movie_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

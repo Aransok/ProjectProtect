@@ -1,0 +1,66 @@
+{% extends 'base_site.html' %}
+{% load static %}
+{% include 'navbar.html' %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <title>Home</title>
+
+</head>
+<body>
+<header class="site">
+
+
+</header>
+{% block content %}
+    <main class="content-movies">
+    <section class="movie_section">
+        <ul class="movie_list">
+            {% for movie in page_obj %}
+                <li class="movie_item">
+                    <a href="{% url 'movie_details' movie.pk movie.slug %}"><img src="{{ movie.image }}"  alt="Image"></a>
+                    <a class="trailer-link" href="{% url 'movie_details' movie.pk movie.slug %}">{{ movie.name }}</a>
+                    <p>{{ movie.year }}</p>
+                    <p>{{ movie.genre }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination-container">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="pagination-item">
+                        <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for page in page_obj.paginator.page_range %}
+                    <li class="pagination-item">
+                        <a class="pagination-link{% if page == page_obj.number %} current-page{% endif %}"
+                           href="?page={{ page }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="pagination-item">
+                        <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </section>
+
+{% endblock %}
+</main>
+<footer>
+
+</footer>
+</body>
+</html>

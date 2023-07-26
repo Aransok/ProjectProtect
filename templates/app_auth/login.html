@@ -1,0 +1,46 @@
+{% extends 'base_site.html' %}
+{% load static %}
+{{ request.user }}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/register_css.css' %}">
+     <section class="vh-100" ;
+;">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 2.5%;">
+                        <div class="card-body p-md-5"     style="    background-color: #434242;
+
+border-radius: 2.5%">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1"style="color: #7D7463">
+
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+
+                                    <form class="mx-1 mx-md-4" action="{% url 'login' %}" method="POST">
+
+                                        {{ form.as_p }}
+                                        <div>
+                                            <button type="submit" class="btn btn-dark"style="font-size: 20px">{{ title }}</button>
+
+                                            <a class="butonche" href="{% url 'register' %}"style="font-size:25px;margin-left:15px">{{ link_title }}</a>
+                                        </div>
+                                        {% csrf_token %}
+                                    </form>
+
+
+                                </div>
+                                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                    <img src="{% static "images/Top-best-Android-Apps-to-watch-and-stream-free-movies-online.jpg" %}"
+                                         class="img-fluid" alt="Sample image">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
