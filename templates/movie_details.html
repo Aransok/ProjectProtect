@@ -40,45 +40,34 @@
     <div class="Comments">
         <h2>Comments</h2>
         {% if movie.comments.all %}
+            
             <ul>
-
                 {% for comment in movie.comments.all %}
                     <li>
                         <strong>{{ comment.user }}</strong> - {{ comment.timestamp }}<br>
                         {{ comment.text }}
-                    </li>
-
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No comments yet.</p>
-        {% endif %}
-        {% if user.is_authenticated %}
-            <h2>Add a Comment</h2>
-            <form method="post" action="{% url 'comment' movie.pk movie.slug %}">
-                {{ form.as_p }}
-
-                <input type="submit" value="Comment">
-                {% csrf_token %}
-            </form>
-        {% endif %}
-        {% if movie.comment_set.exists %}
-            <h2>Comments</h2>
-            <ul>
-                {% for comment in movie.comment_set.all %}
-                    <li>
-                        {{ comment.content }}
                         {% if comment.user == request.user %}
-                            <form action="{% url 'delete_comment' pk=movie.pk slug=movie.slug %}" method="POST">
-
-                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                <button type="submit">Delete</button>
+                            <form class="delete-form" action="{% url 'delete_comment' pk=movie.pk slug=movie.slug %}"
+                                  method="POST">
                                 {% csrf_token %}
+                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                <button type="submit" class="delete-btn">Delete</button>
                             </form>
                         {% endif %}
                     </li>
                 {% endfor %}
             </ul>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+
+            <form method="post" action="{% url 'comment' movie.pk movie.slug %}">
+                {{ form.as_p }}
+                <input type="submit" value="Comment">
+                {% csrf_token %}
+            </form>
         {% endif %}
     </div>
     <br><br>

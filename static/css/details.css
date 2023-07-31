@@ -198,6 +198,7 @@ img {
 .Comments input[type="submit"]:hover {
     background-color: #F4E0B9;
 }
+
 .related_movie_item {
     width: calc(25%); /* Adjust as needed to show 4 movies in one row */
     margin-bottom: 20px; /* Adjust as needed for spacing between rows */
@@ -227,6 +228,7 @@ img {
     color: #434242;
     text-decoration: none;
 }
+
 .related_movie_list {
     display: flex;
     flex-wrap: wrap;
@@ -234,4 +236,35 @@ img {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+
+.comment-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.delete-form {
+    margin-left: 10px;
+}
+.Comments input[type="submit"] {
+    border-radius: 45%;
+    background-color: #7D7463;
+    color: #F4E0B9;
+}
+.Comments input[type="submit"]:hover {
+    background-color: #7D7463;
+    color: #F4E0B9;
+    font-size: 12px;
+}
+.delete-btn{
+    background-color: #7D7463;
+    color: #F4E0B9;
+    border-radius: 45%;
+    font-size: 12px;
 }

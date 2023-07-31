@@ -3,6 +3,7 @@ import re
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic as views
 
@@ -24,7 +25,6 @@ class MovieList(views.CreateView):
     }
 
     def get(self, request, *args, **kwargs):
-
         movies = MovieModel.objects.all()
         paginator = Paginator(movies, 20)
         page_number = request.GET.get('page')
@@ -108,13 +108,12 @@ def add_comment(request, pk, slug):
 
 def delete_comment(request, pk, slug):
     movie = get_object_or_404(MovieModel, pk=pk, slug=slug)
-    comment = get_object_or_404(Comment)
-    if comment.user == request.user:
-        comment.delete()
-        comment.movie = movie
-        return redirect('movie_details',
-                        pk=pk, slug=slug)
-    else:
-        form = CommentForm()
+    comment_id = request.POST.get('comment_id')
 
-    return render(request, 'movie_details.html', {'form': form, 'movie': movie})
+    try:
+        comment = Comment.objects.get(pk=comment_id, user=request.user)
+        comment.delete()
+    except Comment.DoesNotExist:
+        pass
+
+    return redirect('movie_details', pk=pk, slug=slug)
