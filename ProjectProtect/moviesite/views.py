@@ -1,9 +1,7 @@
 import re
 
-from django import forms
-from django.contrib.auth import get_user_model
+
 from django.core.paginator import Paginator
-from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic as views
 
@@ -117,3 +115,22 @@ def delete_comment(request, pk, slug):
         pass
 
     return redirect('movie_details', pk=pk, slug=slug)
+
+
+# views.py
+
+
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieModelForm(request.POST)
+        if form.is_valid():
+            movie = form.save(commit=False)
+            if request.user.is_authenticated:
+                pass
+            movie.save()
+            return redirect('home')
+    else:
+        form = MovieModelForm()
+
+    return render(request, 'add_movie.html', {'form': form})
+

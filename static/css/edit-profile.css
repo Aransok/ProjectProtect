@@ -1,0 +1,112 @@
+/* static/css/edit-profile.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F4E0B9;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #A8A196;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.profile-form {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image-container {
+    flex: 1;
+    text-align: center;
+}
+
+.profile-image-container img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #A8A196;
+    border-radius: 50%;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.profile-image-label {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.profile-fields {
+    flex: 2;
+    padding-left: 20px;
+}
+
+.profile-fields label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.profile-fields input[type="text"],
+.profile-fields input[type="date"],
+.profile-fields select {
+    width: 100%;
+    max-width: 250px; /* Set the max width of the input fields to 250 pixels */
+    padding: 8px;
+    border: 1px solid #A8A196;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.form-submit {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-submit button {
+    padding: 8px 16px;
+    background-color: #7D7463;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit button:hover {
+    background-color: #A8A196;
+}
+
+@media only screen and (max-width: 600px) {
+    form {
+        padding: 10px;
+    }
+
+    .profile-image-container img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Additional styles for the profile image and input file */
+.profile-image-container {
+    text-align: center;
+    position: relative;
+}
+
+#image-input {
+    display: none;
+}

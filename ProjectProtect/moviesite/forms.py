@@ -1,5 +1,7 @@
 from django.forms import forms, ModelForm
 from django import forms
+from django.shortcuts import redirect, render
+
 from ProjectProtect.moviesite.models import MovieModel, Comment
 
 

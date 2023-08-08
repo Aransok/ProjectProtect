@@ -1,10 +1,11 @@
-from enum import unique
-from random import choices
-
+from django.contrib.auth.models import Permission, Group, User
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.template.defaultfilters import slugify
 
+
+UserModel = get_user_model()
 
 # Create your models here.
 
@@ -32,6 +33,7 @@ class MovieModel(models.Model):
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES)
     slug = models.SlugField(blank=True, unique=True)
 
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -49,5 +51,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
 
 

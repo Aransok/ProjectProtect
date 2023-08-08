@@ -1,14 +1,14 @@
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import UserModel
-from django.http import request
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth import views as auth_views, login
 
-from ProjectProtect.movie_auth.forms import RegisterForm
+from ProjectProtect.movie_auth.forms import RegisterForm, UserProfileForm
+from ProjectProtect.movie_auth.models import Profile
 
 
 # Create your views here.
@@ -44,9 +44,18 @@ class LogoutView(auth_views.LogoutView):
     template_name = 'app_auth/logout.html'
 
 
-class EditProfileView(auth_mixins.LoginRequiredMixin, views.TemplateView):
-    template_name = 'app_auth/edit-profile.html'
-    user = get_user_model()
-    extra_context = {
-        'user': user,
-    }
+from django.shortcuts import render, redirect
+from .forms import UserProfileForm
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if form.is_valid():
+            form.save()
+            return redirect('edit-profile')
+    else:
+        form = UserProfileForm(instance=request.user.userprofile)
+
+    return render(request, 'app_auth/edit-profile.html', {'form': form})

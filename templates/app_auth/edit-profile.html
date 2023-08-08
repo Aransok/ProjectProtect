@@ -1,11 +1,35 @@
+<!-- edit_profile.html -->
+{% load static %}
+{% include 'navbar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit</title>
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'css/edit-profile.css' %}">
 </head>
 <body>
-    <p>{{ user.name }}
-    {{ user.email }}</p>
+    <h1>Edit Profile</h1>
+    <form method="post" action="{% url 'edit-profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-form">
+            <div class="profile-image-container">
+                <label for="image-input" class="profile-image-label">
+                    {% if form.instance.image %}
+                    <img id="profile-img" src="{{ form.instance.image.url }}" alt="{{ request.user.get_full_name }}">
+                {% else %}
+                    <img id="profile-img" src="{% static 'images/no-profile.jpg' %}" alt="{{ request.user.get_full_name }}">
+                {% endif %}
+                    <span>Change Image</span>
+                </label>
+                <input type="file" id="image-input" name="image" accept="image/*" style="display: none;">
+            </div>
+            <div class="profile-fields">
+                {{ form.as_p }}
+            </div>
+        </div>
+        <div class="form-submit">
+            <button type="submit">Save</button>
+        </div>
+    </form>
 </body>
 </html>

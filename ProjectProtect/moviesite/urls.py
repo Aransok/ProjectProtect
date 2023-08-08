@@ -1,4 +1,3 @@
-from django.template.defaulttags import comment
 from django.urls import path
 
 from ProjectProtect.moviesite import views
@@ -9,5 +8,6 @@ urlpatterns = [
     path('details/<int:pk>-<slug:slug>/', MovieDetails.as_view(), name='movie_details'),
     path('movies/genre/<str:genre>/', GenreMoviesView.as_view(), name='movies_by_genre'),
     path('movies/add/comment/<int:pk>-<slug:slug>/', add_comment, name= "comment"),
-    path('movies/delete/comment/<int:pk>-<slug:slug>/', delete_comment, name= "delete_comment")
+    path('movies/delete/comment/<int:pk>-<slug:slug>/', delete_comment, name= "delete_comment"),
+    path('add_movie/', views.add_movie, name='add_movie'),
 ]
