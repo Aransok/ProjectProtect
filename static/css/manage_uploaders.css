@@ -1,0 +1,148 @@
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+
+.btn-toggle-uploader {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-toggle-uploader:hover {
+    background-color: #0056b3;
+}
+
+
+body {
+    margin-top: 20px;
+}
+
+
+body {
+    font-family: Popins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F4E0B9;
+}
+
+section {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #F4E0B9;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #A8A196;
+    box-shadow: 0 6px 7px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-uploaders {
+    max-width: 100%;
+    margin: 20px auto;
+    background-color: #F4E0B9;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #A8A196;
+    box-shadow: 0 6px 7px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.uploaders-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.uploader-item {
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 7px;
+    border: 1px solid #A8A196;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    color: #1E2D3D;
+    background-color: #ffffff;
+}
+
+.uploader-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #434242;
+    margin-right: 10px;
+}
+
+.uploader-role {
+    font-size: 14px;
+    color: #434242;
+}
+
+.delete-uploader-btn {
+    padding: 5px 10px;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-uploader-btn:hover {
+    background-color: #e74c3c;
+}
+
+.search-bar {
+    margin-bottom: 10px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #A8A196;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.search-btn {
+    padding: 8px 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+

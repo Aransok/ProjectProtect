@@ -8,7 +8,6 @@
             <li><i class="bi bi-film"><a href="{% url 'home' %}">Home</a></i></li>
 
 
-
         </ul>
     </div>
     <div class="navbar-right">
@@ -18,6 +17,14 @@
                 <ul>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     <li><a href="{% url 'edit-profile' %}">Edit Profile</a></li>
+                    {% if user.is_superuser or user.userprofile.is_uploader %}
+                        <li><a href="{% url 'add_movie' %}">Add Movie</a></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <li>
+                            <a  href="{% url 'manage_uploaders' %}">Manage Uploaders</a>
+                        </li>
+                    {% endif %}
                 </ul>
 
 

@@ -1,0 +1,24 @@
+{% load static %}
+{% include 'navbar.html' %}
+<link rel="stylesheet" href="{% static 'css/details.css' %}">
+<h2>Edit Movie</h2>
+<section>
+    <div class="movie-container">
+        <div class="image-container">
+            <div class="image-container">
+                <img src="{{ moviemodel.image.url }}" alt="Image">
+            </div>
+        </div>
+        <div class="movie-details">
+            <div>
+                <h2 class="movie-name">{{ movie.name }}</h2>
+                <p class="movie-year">{{ movie.year }}</p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</section>

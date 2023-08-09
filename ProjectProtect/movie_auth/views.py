@@ -1,5 +1,6 @@
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from django.urls import reverse_lazy
@@ -44,8 +45,6 @@ class LogoutView(auth_views.LogoutView):
     template_name = 'app_auth/logout.html'
 
 
-from django.shortcuts import render, redirect
-from .forms import UserProfileForm
 
 
 @login_required
@@ -59,3 +58,29 @@ def edit_profile(request):
         form = UserProfileForm(instance=request.user.userprofile)
 
     return render(request, 'app_auth/edit-profile.html', {'form': form})
+
+
+@login_required
+def manage_uploaders(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+
+    uploaders = Profile.objects.filter(is_uploader=True).select_related('user')
+
+    context = {
+        'uploaders': uploaders,
+    }
+    return render(request, 'manage_uploaders.html', context)
+
+
+@login_required
+def toggle_uploader_status(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('home')
+
+    user = User.objects.get(pk=user_id)
+    profile = user.userprofile
+    profile.is_uploader = not profile.is_uploader
+    profile.save()
+
+    return redirect('manage_uploaders')

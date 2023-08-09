@@ -1,6 +1,19 @@
-{% extends 'homepage.html' %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add Movie">
-</form>
+{% load static %}
+{% include 'navbar.html' %}
+<link rel="stylesheet" href="{% static 'css/details.css' %}">
+<section>
+    <div class="movie-container">
+    </div>
+    <div class="movie-details">
+        <div>
+            <h2>Add Movie</h2>
+            <form method="post" action="{% url 'add_movie' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add Movie</button>
+            </form>
+        </div>
+        <p class="movie-description">Add a new movie to the collection.</p>
+    </div>
+</section>
+

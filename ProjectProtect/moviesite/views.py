@@ -1,9 +1,11 @@
 import re
 
-
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views import generic as views
+from django.views.generic import UpdateView
 
 from ProjectProtect.moviesite.forms import MovieModelForm, CommentForm
 from ProjectProtect.moviesite.models import MovieModel, Comment
@@ -116,21 +118,37 @@ def delete_comment(request, pk, slug):
 
     return redirect('movie_details', pk=pk, slug=slug)
 
-
-# views.py
+    # views.py
 
 
 def add_movie(request):
     if request.method == 'POST':
-        form = MovieModelForm(request.POST)
+        form = MovieModelForm(request.POST, request.FILES)
         if form.is_valid():
             movie = form.save(commit=False)
-            if request.user.is_authenticated:
-                pass
             movie.save()
             return redirect('home')
     else:
         form = MovieModelForm()
-
     return render(request, 'add_movie.html', {'form': form})
 
+
+class MovieEdit(UserPassesTestMixin, UpdateView):
+    model = MovieModel
+    form_class = MovieModelForm
+    template_name = 'edit-movie.html'
+
+    def get_success_url(self):
+        return reverse_lazy('movie_details', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
+
+    def test_func(self):
+        user = self.request.user
+        return user.is_superuser or (user.is_authenticated and user.userprofile.is_uploader)
+
+
+def delete_movie(request, pk, slug):
+    movie = get_object_or_404(MovieModel, pk=pk, slug=slug)
+    if request.method == 'POST':
+        movie.delete()
+        return redirect('home')
+    return render(request, 'delete_movie.html', {'movie': movie})

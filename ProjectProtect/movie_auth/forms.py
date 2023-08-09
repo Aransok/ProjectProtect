@@ -21,5 +21,13 @@ class UserProfileForm(forms.ModelForm):
 
         widgets = {
             'date_of_birth': forms.widgets.DateInput(attrs={'type': 'date'}),
-
+            'is_uploader': forms.widgets.CheckboxInput(attrs={'class': 'custom-checkbox'})
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['is_uploader'].widget = forms.CheckboxInput(attrs={'class': 'custom-checkbox'})
+        if self.instance.is_uploader:
+            self.fields['is_uploader'].label = 'Stop Being Uploader'
+        else:
+            self.fields['is_uploader'].label = 'Become Uploader'

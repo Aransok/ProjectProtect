@@ -18,15 +18,18 @@ class Profile(models.Model):
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
     image = models.ImageField(upload_to='static/images/profile/', default='static/images/no-profile.JPEG')
+    is_uploader = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.first_name} Profile'
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(instance, **kwargs):
-        instance.userprofile.save()
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()

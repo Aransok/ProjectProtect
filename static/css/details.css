@@ -178,7 +178,7 @@ img {
     font-weight: bold;
 }
 
-/* Comment form styles */
+
 .Comments form {
     margin-top: 20px;
 }
@@ -246,19 +246,64 @@ img {
 .delete-form {
     margin-left: 10px;
 }
+
 .Comments input[type="submit"] {
     border-radius: 45%;
     background-color: #7D7463;
     color: #F4E0B9;
 }
+
 .Comments input[type="submit"]:hover {
     background-color: #7D7463;
     color: #F4E0B9;
     font-size: 12px;
 }
-.delete-btn{
+
+.delete-btn {
     background-color: #7D7463;
     color: #F4E0B9;
     border-radius: 45%;
     font-size: 12px;
 }
+
+.edit-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.edit-button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.edit-button-icon {
+    font-size: 18px;
+    margin-right: 10px;
+}
+.delete-button {
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #e74c3c;
+}
+

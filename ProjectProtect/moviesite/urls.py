@@ -1,7 +1,8 @@
 from django.urls import path
 
 from ProjectProtect.moviesite import views
-from ProjectProtect.moviesite.views import MovieList, MovieDetails, GenreMoviesView, add_comment, delete_comment
+from ProjectProtect.moviesite.views import MovieList, MovieDetails, GenreMoviesView, add_comment, delete_comment, \
+    MovieEdit
 
 urlpatterns = [
     path('', MovieList.as_view(), name='home'),
@@ -10,4 +11,7 @@ urlpatterns = [
     path('movies/add/comment/<int:pk>-<slug:slug>/', add_comment, name= "comment"),
     path('movies/delete/comment/<int:pk>-<slug:slug>/', delete_comment, name= "delete_comment"),
     path('add_movie/', views.add_movie, name='add_movie'),
+    path('edit/<int:pk>-<slug:slug>/', MovieEdit.as_view(), name='movie_edit'),
+    path('movie/<int:pk>/<slug:slug>/delete/', views.delete_movie, name='delete_movie'),
+
 ]
