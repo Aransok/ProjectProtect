@@ -4,12 +4,13 @@
 {% include 'navbar.html' %}
 <!DOCTYPE html>
 <html lang="en">
+{% block content %}
+
 <head>
     <title>Edit Profile</title>
     <link rel="stylesheet" href="{% static 'css/edit-profile.css' %}">
 </head>
 <body>
-{% block content %}
     <h1>Edit Profile</h1>
     <form method="post" action="{% url 'edit-profile' %}" enctype="multipart/form-data">
         {% csrf_token %}

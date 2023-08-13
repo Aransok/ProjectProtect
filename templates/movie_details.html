@@ -1,8 +1,11 @@
+{% extends 'base_site.html' %}
 <!doctype html>
 {% load static %}
 {% include 'navbar.html' %}
 <html lang="en">
 <head>
+    {% block content %}
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -12,7 +15,6 @@
     <script src="https://www.youtube.com/player_api"></script>
 </head>
 <body>
-{% block content %}
 <section>
     <div>
         {% if user.is_superuser %}
