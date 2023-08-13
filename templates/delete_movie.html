@@ -1,3 +1,7 @@
+{% extends 'base_site.html' %}
+{% load static %}
+{% include 'navbar.html' %}
+{% block content %}
 <section>
     <h2>Delete Movie</h2>
     <p>Are you sure you want to delete the movie "{{ movie.name }}"?</p>
@@ -7,3 +11,4 @@
         <a href="{% url 'movie_details' movie.pk movie.slug %}">Cancel</a>
     </form>
 </section>
+{% endblock %}

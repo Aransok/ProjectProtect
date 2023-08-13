@@ -1,6 +1,7 @@
 {% load static %}
 {% include 'navbar.html' %}
 <link rel="stylesheet" href="{% static 'css/details.css' %}">
+{% block content %}
 <h2>Edit Movie</h2>
 <section>
     <div class="movie-container">
@@ -22,3 +23,4 @@
         </div>
     </div>
 </section>
+{% endblock %}

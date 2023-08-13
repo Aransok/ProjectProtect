@@ -1,10 +1,11 @@
 {% load static %}
 {% include 'navbar.html' %}
 <link rel="stylesheet" href="{% static 'css/details.css' %}">
+{% block content %}
 <section>
     <div class="movie-container">
     </div>
-    <div class="movie-details">
+    <div class="movie-add">
         <div>
             <h2>Add Movie</h2>
             <form method="post" action="{% url 'add_movie' %}" enctype="multipart/form-data">
@@ -16,4 +17,4 @@
         <p class="movie-description">Add a new movie to the collection.</p>
     </div>
 </section>
-
+{% endblock %}
