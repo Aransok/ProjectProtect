@@ -3,8 +3,8 @@
 {% load static %}
 {{ request.user }}
 {% block content %}
-    <section class="vh-100" >
-    <link rel="stylesheet" href="{% static 'css/register_css.css' %}">
+    <section class="vh-100">
+        <link rel="stylesheet" href="{% static 'css/register_css.css' %}">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-11">
@@ -20,10 +20,12 @@ border-radius: 2.5%">
                                     <form class="mx-1 mx-md-4" action="{% url 'register' %}" method="POST">
 
                                         {{ form.as_p }}
-                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"style="color: #7D7463">
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
+                                             style="color: #7D7463">
                                             <button type="submit" class="btn btn-dark">{{ title }}</button>
 
-                                            <a class="butonche" href="{% url 'login' %}" style="font-size:25px;margin-left:25px">{{ link_title }}</a>
+                                            <a class="butonche" href="{% url 'login' %}"
+                                               style="font-size:25px;margin-left:25px">{{ link_title }}</a>
                                         </div>
                                         {% csrf_token %}
                                     </form>

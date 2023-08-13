@@ -6,11 +6,11 @@
 <html lang="en">
 {% block content %}
 
-<head>
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="{% static 'css/edit-profile.css' %}">
-</head>
-<body>
+    <head>
+        <title>Edit Profile</title>
+        <link rel="stylesheet" href="{% static 'css/edit-profile.css' %}">
+    </head>
+    <body>
     <h1>Edit Profile</h1>
     <form method="post" action="{% url 'edit-profile' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -18,10 +18,12 @@
             <div class="profile-image-container">
                 <label for="image-input" class="profile-image-label">
                     {% if form.instance.image %}
-                    <img id="profile-img" src="{{ form.instance.image.url }}" alt="{{ request.user.get_full_name }}">
-                {% else %}
-                    <img id="profile-img" src="{% static 'images/no-profile.jpg' %}" alt="{{ request.user.get_full_name }}">
-                {% endif %}
+                        <img id="profile-img" src="{{ form.instance.image.url }}"
+                             alt="{{ request.user.get_full_name }}">
+                    {% else %}
+                        <img id="profile-img" src="{% static 'images/no-profile.jpg' %}"
+                             alt="{{ request.user.get_full_name }}">
+                    {% endif %}
                     <span>Change Image</span>
                 </label>
                 <input type="file" id="image-input" name="image" accept="image/*" style="display: none;">

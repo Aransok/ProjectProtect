@@ -24,7 +24,8 @@
         <ul class="movie_list">
             {% for movie in page_obj %}
                 <li class="movie_item">
-                    <a href="{% url 'movie_details' movie.pk movie.slug %}"><img src="{{ movie.image }}"  alt="Image"></a>
+                    <a href="{% url 'movie_details' movie.pk movie.slug %}"><img src="{{ movie.image }}"
+                                                                                 alt="Image"></a>
                     <a class="trailer-link" href="{% url 'movie_details' movie.pk movie.slug %}">{{ movie.name }}</a>
                     <p>{{ movie.year }}</p>
                     <p>{{ movie.genre }}</p>

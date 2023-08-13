@@ -3,32 +3,32 @@
 {% include 'navbar.html' %}
 <link rel="stylesheet" href="{% static 'css/manage_uploaders.css' %}">
 {% block content %}
-<h1>Manage Uploaders</h1>
+    <h1>Manage Uploaders</h1>
     <table class="table">
         <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Uploader</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Uploader</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            {% for uploader in uploaders %}
-                <tr>
-                    <td>{{ uploader.user.username }}</td>
-                    <td>{{ uploader.user.email }}</td>
-                    <td>{{ uploader.is_uploader }}</td>
-                    <td>
-                        <form method="post" action="{% url 'toggle_uploader_status' uploader.user.pk %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">
-                                Toggle Uploader Status
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% for uploader in uploaders %}
+            <tr>
+                <td>{{ uploader.user.username }}</td>
+                <td>{{ uploader.user.email }}</td>
+                <td>{{ uploader.is_uploader }}</td>
+                <td>
+                    <form method="post" action="{% url 'toggle_uploader_status' uploader.user.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">
+                            Toggle Uploader Status
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

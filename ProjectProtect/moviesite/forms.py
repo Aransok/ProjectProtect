@@ -11,6 +11,7 @@ class MovieModelForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['slug']
 
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment

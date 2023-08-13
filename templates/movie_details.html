@@ -6,167 +6,168 @@
 <head>
     {% block content %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ movie.name }}</title>
-    <link rel="stylesheet" href="{% static 'css/details.css' %}">
-    <script src="https://www.youtube.com/player_api"></script>
-</head>
-<body>
-<section>
-    <div>
-        {% if user.is_superuser %}
-            <div class="delete-button-container">
-                <form action="{% url 'delete_movie' movie.pk movie.slug %}" method="POST">
-                    {% csrf_token %}
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{ movie.name }}</title>
+        <link rel="stylesheet" href="{% static 'css/details.css' %}">
+        <script src="https://www.youtube.com/player_api"></script>
+        </head>
+        <body>
+        <section>
+            <div>
+                {% if user.is_superuser %}
                     <div class="delete-button-container">
-                        <button class="delete-button" onclick="confirmDelete()">Delete Movie</button>
+                        <form action="{% url 'delete_movie' movie.pk movie.slug %}" method="POST">
+                            {% csrf_token %}
+                            <div class="delete-button-container">
+                                <button class="delete-button" onclick="confirmDelete()">Delete Movie</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                {% endif %}
             </div>
-        {% endif %}
-    </div>
-    <div class="movie-container">
-        <div class="image-container">
-            <img src="{{ movie.image.url }}" alt="Image">
-            <div class="trailer-button-container">
-                <div class="play-button" id="play-button">
-                    <span class="play-icon">▶</span> Play Trailer
+            <div class="movie-container">
+                <div class="image-container">
+                    <img src="{{ movie.image.url }}" alt="Image">
+                    <div class="trailer-button-container">
+                        <div class="play-button" id="play-button">
+                            <span class="play-icon">▶</span> Play Trailer
+                        </div>
+                    </div>
+                </div>
+                <div class="movie-details">
+                    <div>
+                        <h2 class="movie-name">{{ movie.name }}</h2>
+                        <p class="movie-year">{{ movie.year }}</p>
+                        <p class="movie-genre">{{ movie.genre }}</p>
+                    </div>
+                    <p class="movie-description">{{ movie.description }}</p>
                 </div>
             </div>
-        </div>
-        <div class="movie-details">
-            <div>
-                <h2 class="movie-name">{{ movie.name }}</h2>
-                <p class="movie-year">{{ movie.year }}</p>
-                <p class="movie-genre">{{ movie.genre }}</p>
+            <div class="trailer-modal" id="trailer-modal">
+                <div class="trailer-modal-content">
+                    <div class="close-button" id="close-button">&times;</div>
+                    <div class="trailer-iframe" id="trailer-iframe"></div>
+                </div>
             </div>
-            <p class="movie-description">{{ movie.description }}</p>
-        </div>
-    </div>
-    <div class="trailer-modal" id="trailer-modal">
-        <div class="trailer-modal-content">
-            <div class="close-button" id="close-button">&times;</div>
-            <div class="trailer-iframe" id="trailer-iframe"></div>
-        </div>
-    </div>
-    {% if user.is_superuser or user.userprofile.is_uploader %}
-        <div class="edit-button-container">
-            <a href="{% url 'movie_edit' movie.pk movie.slug %}" class="edit-button">Edit Movie</a>
-        </div>
-    {% endif %}
-    <hr>
-    <div class="Comments">
-        <h2>Comments</h2>
-        {% if movie.comments.all %}
+            {% if user.is_superuser or user.userprofile.is_uploader %}
+                <div class="edit-button-container">
+                    <a href="{% url 'movie_edit' movie.pk movie.slug %}" class="edit-button">Edit Movie</a>
+                </div>
+            {% endif %}
+            <hr>
+            <div class="Comments">
+                <h2>Comments</h2>
+                {% if movie.comments.all %}
 
-            <ul>
-                {% for comment in movie.comments.all %}
-                    <li>
-                        <strong>{{ comment.user }}</strong> - {{ comment.timestamp }}<br>
-                        {{ comment.text }}
-                        {% if comment.user == request.user %}
-                            <form class="delete-form" action="{% url 'delete_comment' pk=movie.pk slug=movie.slug %}"
-                                  method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                                <button type="submit" class="delete-btn">Delete</button>
-                            </form>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No comments yet.</p>
-        {% endif %}
+                    <ul>
+                        {% for comment in movie.comments.all %}
+                            <li>
+                                <strong>{{ comment.user }}</strong> - {{ comment.timestamp }}<br>
+                                {{ comment.text }}
+                                {% if comment.user == request.user %}
+                                    <form class="delete-form"
+                                          action="{% url 'delete_comment' pk=movie.pk slug=movie.slug %}"
+                                          method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <button type="submit" class="delete-btn">Delete</button>
+                                    </form>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No comments yet.</p>
+                {% endif %}
 
-        {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
 
-            <form method="post" action="{% url 'comment' movie.pk movie.slug %}">
-                {{ form.as_p }}
-                <input type="submit" value="Comment">
-                {% csrf_token %}
-            </form>
-        {% endif %}
-    </div>
-    <br><br>
-    <hr>
-    <h2>Related Movies</h2>
-    <hr>
-    <br><br>
-    <div class="related_movies">
-        <div>
-            <ul class="related_movie_list">
-                {% for related_movie in movies %}
-                    {% if related_movie.genre == movie.genre and related_movie and related_movie != movie %}
-                        <li class="related_movie_item">
-                            <img src="{{ related_movie.image.url }}" alt="Image">
-                            <a class="trailer-link"
-                               href="{% url 'movie_details' related_movie.pk related_movie.slug %}">{{ related_movie.name }}</a>
-                            <p>{{ related_movie.year }}</p>
-                            <p>{{ related_movie.genre }}</p>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+                    <form method="post" action="{% url 'comment' movie.pk movie.slug %}">
+                        {{ form.as_p }}
+                        <input type="submit" value="Comment">
+                        {% csrf_token %}
+                    </form>
+                {% endif %}
+            </div>
+            <br><br>
+            <hr>
+            <h2>Related Movies</h2>
+            <hr>
+            <br><br>
+            <div class="related_movies">
+                <div>
+                    <ul class="related_movie_list">
+                        {% for related_movie in movies %}
+                            {% if related_movie.genre == movie.genre and related_movie and related_movie != movie %}
+                                <li class="related_movie_item">
+                                    <img src="{{ related_movie.image.url }}" alt="Image">
+                                    <a class="trailer-link"
+                                       href="{% url 'movie_details' related_movie.pk related_movie.slug %}">{{ related_movie.name }}</a>
+                                    <p>{{ related_movie.year }}</p>
+                                    <p>{{ related_movie.genre }}</p>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
 
-</section>
+        </section>
 
-<script>
-    let player;
-    const playButton = document.getElementById('play-button');
-    const trailerModal = document.getElementById('trailer-modal');
-    const closeBtn = document.getElementById('close-button');
-    const trailerIframe = document.getElementById('trailer-iframe');
-    const youtubeVideoId = '{{ youtube_video_id }}';
+        <script>
+            let player;
+            const playButton = document.getElementById('play-button');
+            const trailerModal = document.getElementById('trailer-modal');
+            const closeBtn = document.getElementById('close-button');
+            const trailerIframe = document.getElementById('trailer-iframe');
+            const youtubeVideoId = '{{ youtube_video_id }}';
 
-    playButton.addEventListener('click', function () {
-        trailerModal.classList.add('show');
-        trailerIframe.innerHTML = `<iframe src="https://www.youtube.com/embed/${youtubeVideoId}"  allowfullscreen></iframe>`;
-    });
+            playButton.addEventListener('click', function () {
+                trailerModal.classList.add('show');
+                trailerIframe.innerHTML = `<iframe src="https://www.youtube.com/embed/${youtubeVideoId}"  allowfullscreen></iframe>`;
+            });
 
-    closeBtn.addEventListener('click', function () {
-        trailerModal.classList.remove('show');
-        trailerIframe.innerHTML = '';
-    });
+            closeBtn.addEventListener('click', function () {
+                trailerModal.classList.remove('show');
+                trailerIframe.innerHTML = '';
+            });
 
-    function onYouTubePlayerAPIReady() {
-        player = new YT.Player('player', {
-            videoId: '{{ youtube_video_id }}',
-            playerVars: {
-                autoplay: 0,
-            },
-            events: {
-                'onReady': onPlayerReady
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player('player', {
+                    videoId: '{{ youtube_video_id }}',
+                    playerVars: {
+                        autoplay: 0,
+                    },
+                    events: {
+                        'onReady': onPlayerReady
+                    }
+                });
             }
-        });
-    }
 
-    function onPlayerReady(event) {
-        const playButton = document.getElementById('play-button');
-        playButton.addEventListener('click', function () {
-            event.target.playVideo();
-            playButton.style.display = 'none';
-        });
-    }
-</script>
+            function onPlayerReady(event) {
+                const playButton = document.getElementById('play-button');
+                playButton.addEventListener('click', function () {
+                    event.target.playVideo();
+                    playButton.style.display = 'none';
+                });
+            }
+        </script>
 
-<script>
-    function confirmDelete() {
-        var result = confirm("Are you sure you want to delete this movie?");
-        if (result) {
+        <script>
+            function confirmDelete() {
+                var result = confirm("Are you sure you want to delete this movie?");
+                if (result) {
 
-            window.location.href = "{% url 'delete_movie' movie.pk movie.slug %}";
-        } else {
+                    window.location.href = "{% url 'delete_movie' movie.pk movie.slug %}";
+                } else {
 
-            event.preventDefault();
-        }
-    }
-</script>
-{% endblock %}
-</body>
+                    event.preventDefault();
+                }
+            }
+        </script>
+    {% endblock %}
+    </body>
 </html>

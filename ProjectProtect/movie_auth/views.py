@@ -45,8 +45,6 @@ class LogoutView(auth_views.LogoutView):
     template_name = 'app_auth/logout.html'
 
 
-
-
 @login_required
 def edit_profile(request):
     if request.method == 'POST':

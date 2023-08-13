@@ -5,50 +5,50 @@
 {% block content %}
     <main class="content-movies">
         <section class="movie_section">
-        <h1>{{ genre }} Movies</h1>
+            <h1>{{ genre }} Movies</h1>
             <ul class="movie_list">
-            {% if page_obj %}
-                {% for movie in page_obj %}
-                    <li class="movie_item">
-                        <img src="{{ movie.image.url }}" alt="Image">
-                        <a class="trailer-link"
-                           href="{% url 'movie_details' movie.pk movie.slug %}">{{ movie.name }}</a>
-                        <p>{{ movie.year }}</p>
-                        <p>{{ movie.genre }}</p>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <br><br>
-
-            <h2>No movies in this genre</h2>
-
-                <br> <br>
-            {% endif %}
-            </ul>
-        {% if page_obj %}
-            <div class="pagination-container">
-                <ul class="pagination">
-                    {% if page_obj.has_previous %}
-                        <li class="pagination-item">
-                            <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                        </li>
-                    {% endif %}
-
-                    {% for page in page_obj.paginator.page_range %}
-                        <li class="pagination-item">
-                            <a class="pagination-link{% if page == page_obj.number %} current-page{% endif %}"
-                               href="?page={{ page }}">{{ page }}</a>
+                {% if page_obj %}
+                    {% for movie in page_obj %}
+                        <li class="movie_item">
+                            <img src="{{ movie.image.url }}" alt="Image">
+                            <a class="trailer-link"
+                               href="{% url 'movie_details' movie.pk movie.slug %}">{{ movie.name }}</a>
+                            <p>{{ movie.year }}</p>
+                            <p>{{ movie.genre }}</p>
                         </li>
                     {% endfor %}
+                {% else %}
+                    <br><br>
 
-                    {% if page_obj.has_next %}
-                        <li class="pagination-item">
-                            <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        {% endif %}
+                    <h2>No movies in this genre</h2>
+
+                    <br> <br>
+                {% endif %}
+            </ul>
+            {% if page_obj %}
+                <div class="pagination-container">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="pagination-item">
+                                <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in page_obj.paginator.page_range %}
+                            <li class="pagination-item">
+                                <a class="pagination-link{% if page == page_obj.number %} current-page{% endif %}"
+                                   href="?page={{ page }}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="pagination-item">
+                                <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
         </section>
     </main>
 {% endblock %}

@@ -118,8 +118,6 @@ def delete_comment(request, pk, slug):
 
     return redirect('movie_details', pk=pk, slug=slug)
 
-    # views.py
-
 
 def add_movie(request):
     if request.method == 'POST':
