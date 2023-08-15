@@ -33,7 +33,6 @@ class MovieModel(models.Model):
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES)
     slug = models.SlugField(blank=True, unique=True)
 
-
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -53,5 +52,17 @@ class Comment(models.Model):
         return self.text
 
 
+class MovieLikes(models.Model):
+    movie = models.ForeignKey(MovieModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)
+
+class MovieDisLikes(models.Model):
+    movie = models.ForeignKey(MovieModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    disliked = models.BooleanField(default=False)
 
 
+class UserWatchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(MovieModel, on_delete=models.CASCADE)

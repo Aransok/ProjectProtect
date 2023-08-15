@@ -18,7 +18,7 @@ from ProjectProtect.movie_auth.models import Profile
 class RegisterView(views.CreateView):
     template_name = 'app_auth/register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('home')
     extra_context = {
         'form': form_class,
         'title': 'Register',

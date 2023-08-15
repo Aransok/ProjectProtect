@@ -1,0 +1,28 @@
+{% extends 'base_site.html' %}
+
+{% block content %}
+    <h1>Your Watchlist</h1>
+
+    {% if watchlist %}
+        <ul class="movie-list">
+            {% for entry in watchlist %}
+                <li class="movie_item">
+                    <a href="{% url 'movie_details' entry.movie.pk entry.movie.slug %}">
+                        <img src="{{ entry.movie.image.url }}" alt="{{ entry.movie.title }} Image">
+                    </a>
+                    <a class="trailer-link" href="{% url 'movie_details' entry.movie.pk entry.movie.slug %}">
+                        {{ entry.movie.title }}
+                    </a>
+                    <p>{{ entry.movie.name }}</p>
+                    <p>{{ entry.movie.year }}</p>
+                    <p>{{ entry.movie.genre }}</p>
+                    <a href="{% url 'remove_from_watchlist' entry.movie.pk entry.movie.slug %}">
+                        Remove from Watchlist
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your watchlist is empty.</p>
+    {% endif %}
+{% endblock %}

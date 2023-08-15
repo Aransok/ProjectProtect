@@ -1,14 +1,15 @@
 import re
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import generic as views
+from django.views import generic as views, View
 from django.views.generic import UpdateView
 
 from ProjectProtect.moviesite.forms import MovieModelForm, CommentForm
-from ProjectProtect.moviesite.models import MovieModel, Comment
+from ProjectProtect.moviesite.models import MovieModel, Comment, UserWatchlist, MovieLikes, MovieDisLikes
 
 
 # Create your views here.
@@ -39,10 +40,25 @@ class MovieDetails(views.View):
     movies = MovieModel.objects.all()
     form_class = Comment
 
+
     extra_context = {
-        'movies': movies
+        'movies': movies,
     }
 
+    def get(self, request, pk, slug):
+        movie = self.get_object()
+        movie_likes = MovieLikes.objects.filter(movie=movie, liked=True).count()
+
+
+        context = {
+            'movie': movie,
+            'youtube_video_id': self.get_youtube_video_id(movie.trailer),
+            'comments': Comment.objects.all(),
+            'movies': self.movies,
+            'movie_likes': movie_likes,
+
+        }
+        return render(request,self.template_name , context=context)
     def get_object(self, queryset=None):
         slug = self.kwargs.get('slug')
         pk = self.kwargs.get('pk')
@@ -150,3 +166,38 @@ def delete_movie(request, pk, slug):
         movie.delete()
         return redirect('home')
     return render(request, 'delete_movie.html', {'movie': movie})
+
+
+
+def add_to_watchlist(request, pk, slug):
+    movie = MovieModel.objects.get(pk=pk, slug=slug)
+    UserWatchlist.objects.get_or_create(user=request.user, movie=movie)
+    return redirect('movie_details', pk=pk, slug=slug)
+
+
+
+def like_movie(request, pk, slug):
+    movie = MovieModel.objects.get(pk=pk, slug=slug)
+    like, created = MovieLikes.objects.get_or_create(user=request.user, movie=movie)
+    if not like.liked:
+        like.liked = True
+        like.save()
+    return redirect('movie_details', pk=pk, slug=slug)
+
+@login_required
+def user_profile(request):
+    user = request.user
+    watchlist = UserWatchlist.objects.filter(user=user)
+    liked_movies = MovieLikes.objects.filter(user=user, liked=True)
+    context = {
+        'watchlist': watchlist,
+        'liked_movies': liked_movies
+    }
+    return render(request,'user_movies.html', context=context)
+
+
+def remove_from_watchlist(request, pk, slug):
+    movie = MovieModel.objects.get(pk=pk, slug=slug)
+    UserWatchlist.objects.filter(user=request.user, movie=movie).delete()
+    return redirect('movie_details', pk=pk, slug=slug)
+

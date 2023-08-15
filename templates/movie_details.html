@@ -27,6 +27,7 @@
                         </form>
                     </div>
                 {% endif %}
+            <p>Likes: {{ movie.movielikes_set.count }}</p>
             </div>
             <div class="movie-container">
                 <div class="image-container">
@@ -44,6 +45,7 @@
                         <p class="movie-genre">{{ movie.genre }}</p>
                     </div>
                     <p class="movie-description">{{ movie.description }}</p>
+
                 </div>
             </div>
             <div class="trailer-modal" id="trailer-modal">
@@ -52,11 +54,34 @@
                     <div class="trailer-iframe" id="trailer-iframe"></div>
                 </div>
             </div>
+
             {% if user.is_superuser or user.userprofile.is_uploader %}
                 <div class="edit-button-container">
                     <a href="{% url 'movie_edit' movie.pk movie.slug %}" class="edit-button">Edit Movie</a>
                 </div>
             {% endif %}
+            {% if user.is_authenticated %}
+            <h2>Actions</h2>
+            <p>
+
+            <form method="post" action="{% url 'remove_from_watchlist' movie.pk movie.slug %}">
+                {% csrf_token %}
+                <button class="remove-watchlist-link" type="submit">Remove from Watchlist</button>
+            </form>
+            </p>
+            <p>
+                <a class="watchlist-link" href="{% url 'add_to_watchlist' movie.pk movie.slug %}">Add to
+                    Watchlist</a>
+
+            </p>
+
+
+
+            <form action="{% url 'like_movie' movie.pk movie.slug %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Like</button>
+            </form>
+{% endif %}
             <hr>
             <div class="Comments">
                 <h2>Comments</h2>
